@@ -44,9 +44,7 @@ const (
 
 	PLUS
 	DASH
-	DOUBLE_SLASH
 	SLASH
-	DOUBLE_STAR
 	STAR
 	PERCENT
 
@@ -68,6 +66,25 @@ const (
 	TYPEOF
 	IN
 )
+
+var reserved_lu map[string]TokenKind = map[string]TokenKind{
+	"let":     LET,
+	"const":   CONST,
+	"class":   CLASS,
+	"new":     NEW,
+	"import":  IMPORT,
+	"from":    FROM,
+	"fn":      FN,
+	"if":      IF,
+	"elif":    ELIF,
+	"else":    ELSE,
+	"foreach": FOREACH,
+	"while":   WHILE,
+	"for":     FOR,
+	"export":  EXPORT,
+	"typeof":  TYPEOF,
+	"in":      IN,
+}
 
 type Token struct {
 	Kind  TokenKind
@@ -130,9 +147,7 @@ func (kind TokenKind) toString() string {
 		"minus_equals",
 		"plus",
 		"dash",
-		"double_slash",
 		"slash",
-		"double_star",
 		"star",
 		"percent",
 		"let",
