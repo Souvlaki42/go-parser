@@ -47,6 +47,7 @@ const (
 	SLASH
 	STAR
 	PERCENT
+	CARET
 
 	// Reserved Keywords
 	LET
@@ -103,9 +104,9 @@ func (token Token) isOneOfMany(expectedTokens ...TokenKind) bool {
 
 func (token Token) Debug() {
 	if token.isOneOfMany(IDENTIFIER, NUMBER, STRING) {
-		fmt.Printf("%s {%s}\n", token.Kind.toString(), token.Value)
+		fmt.Printf("%s {%s}\n", token.Kind.ToString(), token.Value)
 	} else {
-		fmt.Printf("%s {}\n", token.Kind.toString())
+		fmt.Printf("%s {}\n", token.Kind.ToString())
 	}
 }
 
@@ -113,7 +114,7 @@ func NewToken(kind TokenKind, value string) Token {
 	return Token{kind, value}
 }
 
-func (kind TokenKind) toString() string {
+func (kind TokenKind) ToString() string {
 	names := [...]string{
 		"eof",
 		"number",
@@ -150,6 +151,7 @@ func (kind TokenKind) toString() string {
 		"slash",
 		"star",
 		"percent",
+		"caret",
 		"let",
 		"const",
 		"class",

@@ -113,6 +113,7 @@ func createLexer(source string) *lexer {
 			{regexp.MustCompile(`/`), defaultHandler(SLASH, "/")},
 			{regexp.MustCompile(`\*`), defaultHandler(STAR, "*")},
 			{regexp.MustCompile(`%`), defaultHandler(PERCENT, "%")},
+			{regexp.MustCompile(`^`), defaultHandler(CARET, "^")},
 			// define all of our patterns
 		},
 	}
