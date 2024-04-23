@@ -41,8 +41,7 @@ func led(kind lexer.TokenKind, bp binding_power, led_fn led_handler) {
 	led_lu[kind] = led_fn
 }
 
-func nud(kind lexer.TokenKind, bp binding_power, nud_fn nud_handler) {
-	bp_lu[kind] = primary
+func nud(kind lexer.TokenKind, nud_fn nud_handler) {
 	nud_lu[kind] = nud_fn
 }
 
@@ -51,12 +50,21 @@ func stmt(kind lexer.TokenKind, stmt_fn stmt_handler) {
 	stmt_lu[kind] = stmt_fn
 }
 
+// array[index] // computed expression // LED
+// const foo = [1, 2, 3]; // Array/Slice literal // NUD
 func createTokenLookups() {
 
 	// Order of precedence in binary expressions from lowest to highest
 	// In this function the higher the operation type the lowest their precedence
 
 	// For example, here the logical expressions will be evaluated last
+
+	// Assignment
+	led(lexer.ASSIGNMENT, assignment, parse_assignment_expr)
+	led(lexer.PLUS_EQUALS, assignment, parse_assignment_expr)
+	led(lexer.MINUS_EQUALS, assignment, parse_assignment_expr)
+	// led(lexer.PLUS_PLUS, parse_assignment_expr)
+	// led(lexer.MINUS_MINUS, parse_assignment_expr)
 
 	// Logical
 	led(lexer.AND, logical, parse_binary_expr)
@@ -82,9 +90,11 @@ func createTokenLookups() {
 	led(lexer.CARET, exponentiational, parse_binary_expr)
 
 	// Literals & Symbols
-	nud(lexer.NUMBER, primary, parse_primary_expr)
-	nud(lexer.STRING, primary, parse_primary_expr)
-	nud(lexer.IDENTIFIER, primary, parse_primary_expr)
+	nud(lexer.NUMBER, parse_primary_expr)
+	nud(lexer.STRING, parse_primary_expr)
+	nud(lexer.IDENTIFIER, parse_primary_expr)
+	nud(lexer.OPEN_PAREN, parse_grouping_expr)
+	nud(lexer.DASH, parse_prefix_expr)
 
 	// Statements
 	stmt(lexer.CONST, parse_var_decl_stmt)

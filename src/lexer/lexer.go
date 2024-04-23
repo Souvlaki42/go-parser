@@ -77,11 +77,11 @@ func createLexer(source string) *lexer {
 		source: source,
 		Tokens: make([]Token, 0),
 		patterns: []regexPattern{
-			{regexp.MustCompile(`[a-zA-Z_][a-zA-Z0-9_]*`), symbolHandler},
-			{regexp.MustCompile(`[0-9]+(\.[0-9]+)?`), numberHandler},
-			{regexp.MustCompile(`"[^"]*"`), stringHandler},
-			{regexp.MustCompile(`\/\/.*`), skipHandler},
-			{regexp.MustCompile(`\s+`), skipHandler},
+			{regexp.MustCompile(`[a-zA-Z_][a-zA-Z0-9_]*`), symbolHandler}, // Identifiers
+			{regexp.MustCompile(`[0-9]+(\.[0-9]+)?`), numberHandler},      // Numbers
+			{regexp.MustCompile(`"[^"]*"`), stringHandler},                // Strings
+			{regexp.MustCompile(`\/\/.*`), skipHandler},                   // Comments
+			{regexp.MustCompile(`\s+`), skipHandler},                      // Spaces
 			{regexp.MustCompile(`\[`), defaultHandler(OPEN_BRACKET, "[")},
 			{regexp.MustCompile(`\]`), defaultHandler(CLOSE_BRACKET, "]")},
 			{regexp.MustCompile(`\{`), defaultHandler(OPEN_CURLY, "{")},
